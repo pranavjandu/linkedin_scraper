@@ -169,7 +169,9 @@ class Company(Scraper):
         def get_data(previous_results):
             results_li = results_list.find_elements_by_tag_name("li")
             for res in results_li[previous_results:]:
-                total.append(self.__parse_employee__(res))
+                if self.__parse_employee__(res) != None:
+                    total.append(self.__parse_employee__(res))
+                    break
 
         results_li_len = len(results_li)
         while is_loaded(results_li_len):
