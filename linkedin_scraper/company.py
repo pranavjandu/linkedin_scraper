@@ -200,8 +200,6 @@ class Company(Scraper):
     def scrape_logged_in(self, get_employees=True, close_on_complete=True):
         driver = self.driver
 
-        driver.get(self.linkedin_url)
-
         # _ = WebDriverWait(driver, 3).until(
         #     EC.presence_of_all_elements_located((By.XPATH, '//span[@dir="ltr"]')))
 
@@ -286,8 +284,6 @@ class Company(Scraper):
 
         if get_employees:
             self.employees = self.get_employees()
-
-        driver.get(self.linkedin_url)
 
         if close_on_complete:
             driver.close()
