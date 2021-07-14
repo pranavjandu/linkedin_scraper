@@ -171,7 +171,8 @@ class Company(Scraper):
             for res in results_li[previous_results:]:
                 if self.__parse_employee__(res) != None:
                     total.append(self.__parse_employee__(res))
-                    break
+                    return True
+            return False
 
         results_li_len = len(results_li)
         while is_loaded(results_li_len):
@@ -195,7 +196,9 @@ class Company(Scraper):
                 "window.scrollTo(0, Math.ceil(document.body.scrollHeight));")
             time.sleep(1)
 
-            get_data(results_li_len)
+            re = get_data(results_li_len)
+            if(re):
+                break
             results_li_len = len(total)
         return total
 
