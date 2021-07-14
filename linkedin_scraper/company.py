@@ -301,62 +301,62 @@ class Company(Scraper):
 
         self.name = driver.find_element_by_class_name("name").text.strip()
 
-        self.about_us = driver.find_element_by_class_name(
-            "basic-info-description").text.strip()
-        self.specialties = self.__get_text_under_subtitle_by_class(
-            driver, "specialties")
-        self.website = self.__get_text_under_subtitle_by_class(
-            driver, "website")
-        self.headquarters = driver.find_element_by_class_name(
-            "adr").text.strip()
-        self.industry = driver.find_element_by_class_name(
-            "industry").text.strip()
-        self.company_size = driver.find_element_by_class_name(
-            "company-size").text.strip()
-        self.company_type = self.__get_text_under_subtitle_by_class(
-            driver, "type")
-        self.founded = self.__get_text_under_subtitle_by_class(
-            driver, "founded")
+        # self.about_us = driver.find_element_by_class_name(
+        #     "basic-info-description").text.strip()
+        # self.specialties = self.__get_text_under_subtitle_by_class(
+        #     driver, "specialties")
+        # self.website = self.__get_text_under_subtitle_by_class(
+        #     driver, "website")
+        # self.headquarters = driver.find_element_by_class_name(
+        #     "adr").text.strip()
+        # self.industry = driver.find_element_by_class_name(
+        #     "industry").text.strip()
+        # self.company_size = driver.find_element_by_class_name(
+        #     "company-size").text.strip()
+        # self.company_type = self.__get_text_under_subtitle_by_class(
+        #     driver, "type")
+        # self.founded = self.__get_text_under_subtitle_by_class(
+        #     driver, "founded")
 
-        # get showcase
-        try:
-            driver.find_element_by_id(
-                "view-other-showcase-pages-dialog").click()
-            WebDriverWait(driver, 3).until(
-                EC.presence_of_element_located((By.ID, 'dialog')))
+        # # get showcase
+        # try:
+        #     driver.find_element_by_id(
+        #         "view-other-showcase-pages-dialog").click()
+        #     WebDriverWait(driver, 3).until(
+        #         EC.presence_of_element_located((By.ID, 'dialog')))
 
-            showcase_pages = driver.find_elements_by_class_name(
-                "company-showcase-pages")[1]
-            for showcase_company in showcase_pages.find_elements_by_tag_name("li"):
-                name_elem = showcase_company.find_element_by_class_name("name")
-                companySummary = CompanySummary(
-                    linkedin_url=name_elem.find_element_by_tag_name(
-                        "a").get_attribute("href"),
-                    name=name_elem.text.strip(),
-                    followers=showcase_company.text.strip().split("\n")[1]
-                )
-                self.showcase_pages.append(companySummary)
-            driver.find_element_by_class_name("dialog-close").click()
-        except:
-            pass
+        #     showcase_pages = driver.find_elements_by_class_name(
+        #         "company-showcase-pages")[1]
+        #     for showcase_company in showcase_pages.find_elements_by_tag_name("li"):
+        #         name_elem = showcase_company.find_element_by_class_name("name")
+        #         companySummary = CompanySummary(
+        #             linkedin_url=name_elem.find_element_by_tag_name(
+        #                 "a").get_attribute("href"),
+        #             name=name_elem.text.strip(),
+        #             followers=showcase_company.text.strip().split("\n")[1]
+        #         )
+        #         self.showcase_pages.append(companySummary)
+        #     driver.find_element_by_class_name("dialog-close").click()
+        # except:
+        #     pass
 
-        # affiliated company
-        try:
-            affiliated_pages = driver.find_element_by_class_name(
-                "affiliated-companies")
-            for i, affiliated_page in enumerate(affiliated_pages.find_elements_by_class_name("affiliated-company-name")):
-                if i % 3 == 0:
-                    affiliated_pages.find_element_by_class_name(
-                        "carousel-control-next").click()
+        # # affiliated company
+        # try:
+        #     affiliated_pages = driver.find_element_by_class_name(
+        #         "affiliated-companies")
+        #     for i, affiliated_page in enumerate(affiliated_pages.find_elements_by_class_name("affiliated-company-name")):
+        #         if i % 3 == 0:
+        #             affiliated_pages.find_element_by_class_name(
+        #                 "carousel-control-next").click()
 
-                companySummary = CompanySummary(
-                    linkedin_url=affiliated_page.find_element_by_tag_name(
-                        "a").get_attribute("href"),
-                    name=affiliated_page.text.strip()
-                )
-                self.affiliated_companies.append(companySummary)
-        except:
-            pass
+        #         companySummary = CompanySummary(
+        #             linkedin_url=affiliated_page.find_element_by_tag_name(
+        #                 "a").get_attribute("href"),
+        #             name=affiliated_page.text.strip()
+        #         )
+        #         self.affiliated_companies.append(companySummary)
+        # except:
+        #     pass
 
         if get_employees:
             self.employees = self.get_employees()
