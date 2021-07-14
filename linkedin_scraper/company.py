@@ -89,8 +89,9 @@ class Company(Scraper):
 
     def scrape(self, get_employees=True, close_on_complete=True):
         if self.is_signed_in():
-            self.scrape_logged_in(
+            employees_list = self.scrape_logged_in(
                 get_employees=get_employees, close_on_complete=close_on_complete)
+            return employees_list
         else:
             self.scrape_not_logged_in(
                 get_employees=get_employees, close_on_complete=close_on_complete)
@@ -288,7 +289,9 @@ class Company(Scraper):
         #     pass
 
         if get_employees:
-            self.employees = self.get_employees()
+            employees_l = self.get_employees()
+            self.employees = employees_l
+            return employees_l
 
         if close_on_complete:
             driver.close()
